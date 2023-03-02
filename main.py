@@ -58,7 +58,7 @@ def menu():
     elif choice == "7":
         exit(0)
     else:
-        "Wrong input"
+        print("Wrong input")
         menu()
 
 

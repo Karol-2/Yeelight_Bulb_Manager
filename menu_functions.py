@@ -26,9 +26,18 @@ def temperature(bulb):
     minimal = bulb.get_model_specs()["color_temp"]["min"]
     maximal = bulb.get_model_specs()["color_temp"]["max"]
     temperature_val = input(f"Enter value from {minimal} (warm) - {maximal} (cold): ")  # TODO: different input cases
-    bulb.set_color_temp(int(temperature_val))
 
-    input("Press Enter to continue...")
+    try:
+        int(temperature_val)
+    except ValueError:
+        print("Wrong input!")
+        return
+
+    if minimal <= int(temperature_val) <= maximal:
+        bulb.set_color_temp(int(temperature_val))
+        input("Press Enter to continue...")
+    else:
+        print("Number out of range!")
 
 
 def color(bulb):
@@ -55,6 +64,7 @@ def color(bulb):
         print(i)
 
     color_val = input(f"Enter color name: ")  # TODO: different input cases
+
     bulb.set_rgb(colors[color_val][0], colors[color_val][1], colors[color_val][2])
 
 
