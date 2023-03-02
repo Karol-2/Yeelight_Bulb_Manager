@@ -6,16 +6,26 @@ def power_change(bulb):
 
 def brightness(bulb):
     print("Changing brightness!")
-    brightness_val = input("Enter value of brightness [1-100]: ")  # TODO: different input cases
-    bulb.set_brightness(int(brightness_val))
-    input("Press Enter to continue...")
+    brightness_val = input("Enter value of brightness [1-100]: ")
+
+    try:
+        int(brightness_val)
+    except ValueError:
+        print("Wrong input!")
+        return
+
+    if 1 <= int(brightness_val) <= 100:
+        bulb.set_brightness(int(brightness_val))
+        input("Press Enter to continue...")
+    else:
+        print("Number out of range!")
 
 
 def temperature(bulb):
     print("Changing temperature!")
-    min = bulb.get_model_specs()["color_temp"]["min"]
-    max = bulb.get_model_specs()["color_temp"]["max"]
-    temperature_val = input(f"Enter value from {min} (warm) - {max} (cold): ")  # TODO: different input cases
+    minimal = bulb.get_model_specs()["color_temp"]["min"]
+    maximal = bulb.get_model_specs()["color_temp"]["max"]
+    temperature_val = input(f"Enter value from {minimal} (warm) - {maximal} (cold): ")  # TODO: different input cases
     bulb.set_color_temp(int(temperature_val))
 
     input("Press Enter to continue...")
@@ -49,7 +59,7 @@ def color(bulb):
 
 
 def scene(bulb):  # TODO: add function
-    print("bulbb")
+    print("bulb")
 
 
 def info(bulb):
