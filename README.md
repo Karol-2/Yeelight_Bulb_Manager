@@ -4,7 +4,7 @@
     <h2>💻 Installation</h2>
     <ol>
       <li>Clone the repository:</li>
-      <pre><code>git clone https://github.com/your-account/Yeelight_Bulb_Manager.git</code></pre>
+      <pre><code>git clone https://github.com/Karol-2/Yeelight_Bulb_Manager.git</code></pre>
       <li>Navigate to the repository directory:</li>
       <pre><code>cd Yeelight_Bulb_Manager</code></pre>
       <li>Install the required dependencies:</li>

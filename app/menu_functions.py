@@ -62,9 +62,12 @@ def color(bulb):
     for i in colors:
         print(i)
 
-    color_val = input(f"Enter color name: ")  # TODO: different input cases
-
-    bulb.set_rgb(colors[color_val][0], colors[color_val][1], colors[color_val][2])
+    color_val = input(f"Enter color name: ")
+    if color_val.lower() in colors:
+        bulb.set_rgb(colors[color_val][0], colors[color_val][1], colors[color_val][2])
+    else:
+        print("Wrong input!")
+        return "Wrong input!"
 
 
 def scene(bulb):  # TODO: add function

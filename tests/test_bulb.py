@@ -65,9 +65,9 @@ class TestBulbFunctions(unittest.TestCase):
         bulb_color_val = hex2rgb(bulb_color_hex)
         bulb_color_rgb = tuple(x * 255 for x in bulb_color_val)
 
-        self.assertEqual(int(bulb_color_rgb[0]), lavender_rgb[0], "First rgb value incurrect!")
-        self.assertEqual(int(bulb_color_rgb[1]), lavender_rgb[1], "Second rgb value incurrect!")
-        self.assertEqual(int(bulb_color_rgb[2]), lavender_rgb[2], "Third rgb value incurrect!")
+        self.assertEqual(int(bulb_color_rgb[0]), lavender_rgb[0], "First rgb value incorrect!")
+        self.assertEqual(int(bulb_color_rgb[1]), lavender_rgb[1], "Second rgb value incorrect!")
+        self.assertEqual(int(bulb_color_rgb[2]), lavender_rgb[2], "Third rgb value incorrect!")
 
     @patch('builtins.input', return_value='pinky yellow green grass')
     def test_color_invalid_input(self, mock_input):
@@ -75,9 +75,10 @@ class TestBulbFunctions(unittest.TestCase):
         self.assertEqual(color(self.bulb), "Wrong input!", "Accepted invalid input!")
 
     def test_info_showcase(self):
-        phrases_to_find = ["power", "color_temp", "name"]
-        captured_output = StringIO()
-        info(self.bulb)
-        output = captured_output.getvalue()
-        for phrase in phrases_to_find:
-            self.assertIn(phrase, output)
+        with patch('sys.stdout', new=StringIO()) as captured_output:
+            info(self.bulb)
+            output = captured_output.getvalue().strip()
+            self.assertTrue(output.startswith('Properties:'))
+            self.assertIn('power', output)
+            self.assertIn('name', output)
+            self.assertIn('color_temp', output)
