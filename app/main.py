@@ -15,20 +15,24 @@ def main():
     else:
         print("No env variable found, searching for bulbs")
         bulbs = discover_bulbs()
-        bulb = bulbs[0]
+        first_bulb = bulbs[0]
+        ip = first_bulb['ip']
+        bulb = Bulb(ip)
 
     menu()
 
 
 def menu():
     os.system('cls')
+    is_turned_on = True if bulb.get_properties()['power'] == 'on' else False
 
     print("==========================================")
     print("1.Toggle bulb")
-    print("2.Set brightness")
-    print("3.Set temperature")
-    print("4.Set color")
-    print("5.Set Scene")
+    if is_turned_on:
+        print("2.Set brightness")
+        print("3.Set temperature")
+        print("4.Set color")
+        print("5.Set Scene")
     print("6.Info")
     print("7.Exit")
     print("==========================================")
@@ -40,16 +44,16 @@ def menu():
     if choice == "1":
         power_change(bulb)
         menu()
-    elif choice == "2":
+    elif choice == "2" and is_turned_on:
         brightness(bulb)
         menu()
-    elif choice == "3":
+    elif choice == "3" and is_turned_on:
         temperature(bulb)
         menu()
-    elif choice == "4":
+    elif choice == "4" and is_turned_on:
         color(bulb)
         menu()
-    elif choice == "5":
+    elif choice == "5" and is_turned_on:
         scene(bulb)
         menu()
     elif choice == "6":

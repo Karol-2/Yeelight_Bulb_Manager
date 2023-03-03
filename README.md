@@ -4,7 +4,7 @@
     <h2>💻 Installation</h2>
     <ol>
       <li>Clone the repository:</li>
-      <pre><code>git clone https://github.com/your-account/Yeelight_Bulb_Manager.git</code></pre>
+      <pre><code>git clone https://github.com/Karol-2/Yeelight_Bulb_Manager.git</code></pre>
       <li>Navigate to the repository directory:</li>
       <pre><code>cd Yeelight_Bulb_Manager</code></pre>
       <li>Install the required dependencies:</li>
@@ -14,7 +14,7 @@
     <ol>
       <li>Preferably, enter your bulb ip address into 'BULB' environment variable</li>
       <li>Run the script:</li>
-      <pre><code>python yeelight_bulb_manager.py</code></pre>
+      <pre><code>python app/main.py</code></pre>
       <li>Choose the action you want to perform.</li>
     </ol>
     <h2>🔥 Features</h2>
