@@ -14,7 +14,7 @@
     <ol>
       <li>Preferably, enter your bulb ip address into 'BULB' environment variable</li>
       <li>Run the script:</li>
-      <pre><code>python yeelight_bulb_manager.py</code></pre>
+      <pre><code>python app/main.py</code></pre>
       <li>Choose the action you want to perform.</li>
     </ol>
     <h2>🔥 Features</h2>

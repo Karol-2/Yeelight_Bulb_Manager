@@ -1,3 +1,7 @@
+from yeelight.transitions import *
+from yeelight import Flow
+
+
 def power_change(bulb):
     print("Toggling the light!")
     bulb.toggle()
@@ -70,8 +74,23 @@ def color(bulb):
         return "Wrong input!"
 
 
-def scene(bulb):  # TODO: add function
-    print("bulb")
+def scene(bulb):
+    presets = ["disco", "temp", "strobe", "pulse", "strobe_color", "alarm", "police", "police2", "lsd", "rgb",
+               "christmas", "random_loop", "slowdown"]
+    disco()
+    for i in presets:
+        print(i)
+
+    preset_val = input(f"Enter preset name: ")
+    if preset_val.lower() in presets:
+        flow = Flow(
+            count=10,
+            transitions=globals()[preset_val]()
+        )
+        bulb.start_flow(flow)
+    else:
+        print("Wrong input!")
+        return "Wrong input!"
 
 
 def info(bulb):

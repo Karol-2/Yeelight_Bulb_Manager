@@ -1,10 +1,11 @@
 import os
 import unittest
+from io import StringIO
 from unittest.mock import patch
 
 from colour import hex2rgb
 from yeelight import *
-from io import StringIO
+
 from app.menu_functions import *
 
 
@@ -41,9 +42,9 @@ class TestBulbFunctions(unittest.TestCase):
         maximal = int(self.bulb.get_model_specs()["color_temp"]["max"])
         temp = int(self.bulb.get_properties()['ct'])
 
-        self.assertEqual(temp, 2000)
-        self.assertLessEqual(temp, int(maximal))
-        self.assertGreaterEqual(temp, int(minimal))
+        self.assertEqual(temp, 2000, "Temperature hasn't changed!")
+        self.assertLessEqual(temp, int(maximal), "Temperature is larger than max!")
+        self.assertGreaterEqual(temp, int(minimal), "Temperature is smaller than min!")
 
     @patch('builtins.input', return_value='5')
     def test_temperature_too_small_value(self, mock_input):
@@ -58,7 +59,7 @@ class TestBulbFunctions(unittest.TestCase):
         self.assertEqual(temperature(self.bulb), "Wrong input!")
 
     @patch('builtins.input', return_value='lavender')
-    def test_color_valid(self, mock_input):
+    def test_color_valid_input(self, mock_input):
         lavender_rgb = (230, 230, 250)
         color(self.bulb)
         bulb_color_hex = '#' + hex(int(self.bulb.get_properties()['rgb']))[2::]
@@ -74,11 +75,24 @@ class TestBulbFunctions(unittest.TestCase):
         color(self.bulb)
         self.assertEqual(color(self.bulb), "Wrong input!", "Accepted invalid input!")
 
-    def test_info_showcase(self):
+    @patch('builtins.input', return_value='lsd')
+    def test_scene_valid_preset(self, mock_input):
+        self.bulb.stop_flow()
+        self.assertEqual(self.bulb.get_properties()['flowing'], '0', "Flowing process has not stopped")
+        scene(self.bulb)
+        self.assertEqual(self.bulb.get_properties()['flowing'], '1', "Flowing process has not started")
+        self.bulb.stop_flow()
+
+    @patch('builtins.input', return_value='ip')
+    def test_scene_non_existing_preset(self, mock_input):
+        self.bulb.stop_flow()
+        self.assertEqual(scene(self.bulb), "Wrong input!", "Looking for non-existing preset")
+
+    def test_info_output(self):
         with patch('sys.stdout', new=StringIO()) as captured_output:
             info(self.bulb)
             output = captured_output.getvalue().strip()
             self.assertTrue(output.startswith('Properties:'))
-            self.assertIn('power', output)
-            self.assertIn('name', output)
-            self.assertIn('color_temp', output)
+            self.assertIn('power', output, "There is no \"power\" in output")
+            self.assertIn('name', output, "There is no \"name\" in output")
+            self.assertIn('color_temp', output, "There is no \"color_temp\" in output")
